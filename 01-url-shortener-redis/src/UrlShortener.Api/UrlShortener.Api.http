@@ -1,0 +1,27 @@
+# Requisições de exemplo. No Visual Studio, clique em "Send request" acima de cada uma.
+# Pré-requisitos: `docker compose up -d`, `dotnet ef database update` e a API rodando (F5).
+
+@baseUrl = http://localhost:5080
+
+### Criar uma URL curta
+# @name create
+POST {{baseUrl}}/urls
+Content-Type: application/json
+
+{
+  "url": "https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis"
+}
+
+### Redirecionar: usa o código retornado pela requisição acima (deve responder 302 + Location)
+GET {{baseUrl}}/{{create.response.body.$.code}}
+
+### URL inválida (deve responder 400 com ValidationProblem)
+POST {{baseUrl}}/urls
+Content-Type: application/json
+
+{
+  "url": "javascript:alert(1)"
+}
+
+### Código inexistente (deve responder 404)
+GET {{baseUrl}}/naoexiste
