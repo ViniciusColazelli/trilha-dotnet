@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 using UrlShortener.Api.Data;
 using UrlShortener.Api.ShortUrls;
 
@@ -28,8 +27,10 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();               // documento OpenAPI em /openapi/v1.json
-    app.MapScalarApiReference();    // UI para testar a API em /scalar
+    app.MapOpenApi();   // documento OpenAPI em /openapi/v1.json
+
+    // Swagger UI em /swagger, lendo o documento gerado acima
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "URL Shortener v1"));
 }
 
 app.MapGet("/", () => "URL Shortener API").ExcludeFromDescription();

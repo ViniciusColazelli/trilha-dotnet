@@ -18,7 +18,7 @@ public static class ShortUrlEndpoints
             .WithSummary("Cria uma URL curta");
 
         // maxlength: rejeita códigos absurdamente longos antes de chegar ao banco.
-        // Rotas com segmentos literais (/urls, /scalar, /openapi) têm prioridade sobre este parâmetro.
+        // Rotas com segmentos literais (/urls, /swagger, /openapi) têm prioridade sobre este parâmetro.
         app.MapGet($"/{{code:maxlength({ShortUrl.CodeMaxLength})}}", RedirectAsync)
             .WithName("RedirectToOriginalUrl")
             .WithTags("Redirect")

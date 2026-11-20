@@ -16,7 +16,8 @@
 
   <ItemGroup Label="API">
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.15" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="3.1.1" />
+    <!-- Só a interface do Swagger; o documento OpenAPI é gerado pelo Microsoft.AspNetCore.OpenApi -->
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="11.0.1" />
   </ItemGroup>
 
   <ItemGroup Label="Banco de dados">

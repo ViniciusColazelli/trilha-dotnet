@@ -21,7 +21,10 @@ dotnet run --project src/UrlShortener.Api
 dotnet test
 ```
 
-Para testar os endpoints: abra a UI do Scalar em http://localhost:5080/scalar ou use o arquivo [`UrlShortener.Api.http`](src/UrlShortener.Api/UrlShortener.Api.http) no Visual Studio.
+Para testar os endpoints: abra o Swagger UI em http://localhost:5080/swagger ou use o arquivo [`UrlShortener.Api.http`](src/UrlShortener.Api/UrlShortener.Api.http) no Visual Studio.
+
+> O redirect (`GET /{code}`) não dá para testar bem pelo Swagger: o navegador segue o 302 sozinho e bloqueia por CORS ("Failed to fetch").
+> Use o `.http` ou cole a URL curta na barra de endereço do navegador.
 
 ## Endpoints
 
@@ -33,7 +36,8 @@ Para testar os endpoints: abra a UI do Scalar em http://localhost:5080/scalar ou
 | Serviço | Endereço |
 |---------|----------|
 | API | http://localhost:5080 |
-| Scalar (UI da API) | http://localhost:5080/scalar |
+| Swagger UI | http://localhost:5080/swagger |
+| Documento OpenAPI | http://localhost:5080/openapi/v1.json |
 | PostgreSQL | `localhost:5432` (usuário/senha/banco: `urlshortener`) |
 | Redis | `localhost:6379` |
 | RedisInsight | http://localhost:5540 |
