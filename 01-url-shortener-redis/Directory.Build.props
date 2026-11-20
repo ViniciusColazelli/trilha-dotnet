@@ -1,0 +1,11 @@
+<!--
+  Propriedades aplicadas automaticamente a TODOS os .csproj desta pasta (e subpastas).
+  O MSBuild procura este arquivo subindo a árvore de diretórios a partir de cada projeto.
+-->
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+</Project>

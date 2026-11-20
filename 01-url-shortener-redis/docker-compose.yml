@@ -1,0 +1,56 @@
+# Dependências do Projeto 1 para desenvolvimento local.
+# A API roda fora do Docker (pelo Visual Studio ou `dotnet run`) e se conecta nestas portas.
+#
+#   docker compose up -d      sobe tudo em segundo plano
+#   docker compose ps         mostra o estado (e o resultado dos health checks)
+#   docker compose down       para e remove os containers (os volumes/dados ficam)
+#   docker compose down -v    remove também os volumes (apaga os dados)
+
+name: url-shortener
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      # Credenciais só para desenvolvimento local, nunca use assim em produção
+      POSTGRES_USER: urlshortener
+      POSTGRES_PASSWORD: urlshortener
+      POSTGRES_DB: urlshortener
+    ports:
+      - "5432:5432"
+    volumes:
+      # A partir do Postgres 18 o volume é montado em /var/lib/postgresql
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U urlshortener -d urlshortener"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+    # appendonly: grava cada escrita em disco (AOF) para os dados sobreviverem a um restart
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Interface web para inspecionar chaves, TTLs e Sorted Sets: http://localhost:5540
+  # Ao abrir, adicione o banco com host "redis" e porta 6379.
+  redisinsight:
+    image: redis/redisinsight:3.10
+    ports:
+      - "5540:5540"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  redis-data:
