@@ -1,0 +1,9 @@
+# Normaliza finais de linha no repositório (LF), convertendo no checkout conforme o SO
+* text=auto
+
+# Scripts de shell precisam de LF mesmo no Windows (rodam dentro de containers Linux)
+*.sh text eol=lf
+
+# Arquivos do Visual Studio ficam com CRLF
+*.sln text eol=crlf
+*.slnx text eol=crlf
